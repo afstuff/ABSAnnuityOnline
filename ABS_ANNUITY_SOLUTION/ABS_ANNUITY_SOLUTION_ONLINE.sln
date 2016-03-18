@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ABS_ANNUITY", "ABS_ANNUITY", "{62C22D7B-462B-4DF0-8F02-55F2B5F576E2}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFramework = "3.5"
+		Debug.AspNetCompiler.VirtualPath = "/ABS_ANNUITY"
+		Debug.AspNetCompiler.PhysicalPath = "ABS_ANNUITY\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\ABS_ANNUITY\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/ABS_ANNUITY"
+		Release.AspNetCompiler.PhysicalPath = "ABS_ANNUITY\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\ABS_ANNUITY\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "1959"
+		DefaultWebSiteLanguage = "Visual Basic"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62C22D7B-462B-4DF0-8F02-55F2B5F576E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62C22D7B-462B-4DF0-8F02-55F2B5F576E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<preserve resultType="8" virtualPath="/ABS_ANNUITY/global.asax" hash="ffffffff8d83ae3c" filehash="fffff14ddb4dcf85" flags="150000" assembly="App_global.asax" type="ASP.global_asax">
+    <filedeps>
+        <filedep name="/ABS_ANNUITY/global.asax" />
+    </filedeps>
+</preserve>
