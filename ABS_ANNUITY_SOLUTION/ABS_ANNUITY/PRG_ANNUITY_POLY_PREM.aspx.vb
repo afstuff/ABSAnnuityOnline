@@ -93,7 +93,7 @@ Partial Class Annuity_PRG_ANNUITY_POLY_PREM
             Me.cmdNext.Enabled = False
             Call gnProc_Populate_Box("IL_CODE_LIST", "017", Me.cboPrem_SA_Currency)
             Me.cboPrem_MOP_Type.Items.Clear()
-            Call gnProc_Populate_Box("IL_MOP_FACTOR_LIST", "IND", Me.cboPrem_MOP_Type)
+            'Call gnProc_Populate_Box("IL_MOP_FACTOR_LIST", "IND", Me.cboPrem_MOP_Type)
 
             If Trim(strF_ID) <> "" Then
                 Me.txtFileNum.Text = RTrim(strF_ID)
@@ -112,7 +112,7 @@ Partial Class Annuity_PRG_ANNUITY_POLY_PREM
                     Me.txtDOB.Text = oAL.Item(9)
                     Me.txtDOB_ANB.Text = oAL.Item(10)
                     Me.cmdNext.Enabled = True
-
+                    LoadModeofPayment(txtProduct_Num.Text)
                     If UCase(oAL.Item(18).ToString) = "A" Then
                         Me.cmdNew_ASP.Visible = False
                         'Me.cmdSave_ASP.Visible = False
@@ -429,7 +429,7 @@ Partial Class Annuity_PRG_ANNUITY_POLY_PREM
         End If
 
         If Me.txtAnnualAnnuityLC.Text = "" Then
-            Me.lblMsg.Text = "Missing " & Me.lblPolNum.Text
+            Me.lblMsg.Text = "Missing " & Me.lblPrem_Ann_Contrib_LC.Text
             FirstMsg = "Javascript:alert('" & Me.lblMsg.Text & "')"
             Exit Sub
         End If
@@ -949,8 +949,15 @@ Partial Class Annuity_PRG_ANNUITY_POLY_PREM
                             Exit Sub
                         End If
                         annualAnnuity = (purchaseAmount * rate) / ratePer
-                        monthlyAnnuity = annualAnnuity / 12
-
+                        If cboPrem_MOP_Type.SelectedValue = "M" Then
+                            monthlyAnnuity = annualAnnuity / 12
+                        ElseIf cboPrem_MOP_Type.SelectedValue = "Q" Then
+                            monthlyAnnuity = annualAnnuity / 4
+                        ElseIf cboPrem_MOP_Type.SelectedValue = "H" Then
+                            monthlyAnnuity = annualAnnuity / 2
+                        ElseIf cboPrem_MOP_Type.SelectedValue = "Y" Then
+                            monthlyAnnuity = annualAnnuity
+                        End If
                         txtAnnualAnnuityLC.Text = Format(CType(annualAnnuity, Decimal), "N2")
                         txtAnnualAnnuityFC.Text = Format(CType(annualAnnuity, Decimal), "N2")
                         'Format(CType(dr("TBIL_CLM_PAID_SA_AMT_LC"), Decimal), "N2")
@@ -974,9 +981,19 @@ Partial Class Annuity_PRG_ANNUITY_POLY_PREM
                             Exit Sub
                         End If
 
+                        If rate <> 0 And ratePer <> 0 Then
+                            annualAnnuity = (purchaseAmount * rate) / ratePer
 
-                        annualAnnuity = (purchaseAmount * rate) / ratePer
-                        monthlyAnnuity = annualAnnuity / 12
+                            If cboPrem_MOP_Type.SelectedValue = "M" Then
+                                monthlyAnnuity = annualAnnuity / 12
+                            ElseIf cboPrem_MOP_Type.SelectedValue = "Q" Then
+                                monthlyAnnuity = annualAnnuity / 4
+                            ElseIf cboPrem_MOP_Type.SelectedValue = "H" Then
+                                monthlyAnnuity = annualAnnuity / 2
+                            ElseIf cboPrem_MOP_Type.SelectedValue = "Y" Then
+                                monthlyAnnuity = annualAnnuity
+                            End If
+                        End If
 
                         txtAnnualAnnuityLC.Text = Format(CType(annualAnnuity, Decimal), "N2")
                         txtAnnualAnnuityFC.Text = Format(CType(annualAnnuity, Decimal), "N2")
@@ -1580,5 +1597,71 @@ Partial Class Annuity_PRG_ANNUITY_POLY_PREM
 
     Protected Sub cmdSearch_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdSearch.Click
 
+    End Sub
+    Public Sub LoadModeofPayment(ByVal ProdCode As String)
+        'Populate box with codes
+        Dim strTable As String = ""
+        Dim strTableName As String = ""
+        Dim strSQL As String = ""
+
+        Dim mystrCONN As String = CType(Session("connstr"), String)
+        Dim objOLEConn As New OleDbConnection(mystrCONN)
+
+        Try
+            'open connection to database
+            objOLEConn.Open()
+        Catch ex As Exception
+            Me.lblMsg.Text = "Unable to connect to database. Reason: " & ex.Message
+            objOLEConn = Nothing
+            Exit Sub
+        End Try
+
+        Dim li As ListItem
+        li = New ListItem
+        li.Text = "SELECT"
+        li.Value = "*"
+        cboPrem_MOP_Type.Items.Add(li)
+        cboPrem_MOP_Type.SelectedIndex = 0
+
+        strTable = strTableName
+        strTable = RTrim("TBIL_MOP_FACTOR")
+        strSQL = ""
+        strSQL = strSQL & "SELECT TBIL_MOP_TYPE_CD AS MyFld_Value, TBIL_MOP_TYPE_DESC AS MyFld_Text"
+        strSQL = strSQL & " FROM " & strTable
+        If ProdCode = "A001" Then
+            strSQL = strSQL & " WHERE TBIL_MOP_TYPE_CD IN('M','Q')"
+        Else
+            strSQL = strSQL & " WHERE TBIL_MOP_TYPE_CD IN('M','Q','H','Y')"
+        End If
+
+        Dim objOLECmd As OleDbCommand = New OleDbCommand(strSQL, objOLEConn)
+        objOLECmd.CommandTimeout = 180
+        objOLECmd.CommandType = CommandType.Text
+        Dim objOLEDR As OleDbDataReader
+
+        objOLEDR = objOLECmd.ExecuteReader()
+        While (objOLEDR.Read())
+            li = New ListItem
+            li.Text = objOLEDR("MyFld_Text")
+            li.Value = Trim(objOLEDR("MyFld_Value") & vbNullString)
+            cboPrem_MOP_Type.Items.Add(li)
+
+            'cboPrem_MOP_Type.DataTextField = objOLEDR("MyFld_Text")
+            'cboPrem_MOP_Type.DataTextField = objOLEDR("MyFld_Value")
+        End While
+
+        ' dispose of open objects
+        objOLECmd.Dispose()
+        objOLECmd = Nothing
+
+        If objOLEDR.IsClosed = False Then
+            objOLEDR.Close()
+        End If
+        objOLEDR = Nothing
+
+        If objOLEConn.State = ConnectionState.Open Then
+            objOLEConn.Close()
+        End If
+        objOLEConn = Nothing
     End Sub
 End Class
