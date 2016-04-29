@@ -152,8 +152,6 @@
                                 style="display:inline">
                               <asp:ListItem Text="Retirement Annuity Agreement" 
                                     Value="rptRetireAnnuityAgreement"></asp:ListItem>
-                             <asp:ListItem Text="Annuity Agreement Letter" Value="rptAnnuityAgreementLetter"></asp:ListItem>
-                             
                             </asp:RadioButtonList>
                         </td>                           
                     </tr>

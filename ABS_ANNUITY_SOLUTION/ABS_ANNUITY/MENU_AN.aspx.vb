@@ -411,14 +411,7 @@ Partial Class MENU_AN
 
 
     End Sub
-
-    Protected Sub LNK_CODE_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles LNK_CODE.Click
-        Response.Redirect("MENU_AN.aspx?menu=AN_CODE")
-    End Sub
-
     Protected Sub LNK_QUOTE_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles LNK_QUOTE.Click
         Response.Redirect("MENU_AN.aspx?menu=AN_QUOTE")
     End Sub
-
-    
 End Class

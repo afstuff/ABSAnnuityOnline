@@ -30,8 +30,8 @@
             <!--
                 PROPOSAL LINK - MENU_AN.aspx?menu=AN_QUOTE
             -->
-            &nbsp;<asp:LinkButton ID="LNK_CODE" Enabled="true" runat="server" Text="Master Setup" PostBackUrl="MENU_AN.aspx?menu=AN_CODE"></asp:LinkButton>&nbsp;            
-            <asp:LinkButton ID="LNK_QUOTE" Enabled="true" runat="server" Text="Proposal" PostBackUrl="PRG_ANNTY_PROP_POLICY.aspx?menu=AN_QUOTE"></asp:LinkButton>
+<%--            &nbsp;<asp:LinkButton ID="LNK_CODE" Enabled="true" runat="server" Text="Master Setup" PostBackUrl="MENU_AN.aspx?menu=AN_CODE"></asp:LinkButton>&nbsp;            
+--%>            <asp:LinkButton ID="LNK_QUOTE" Enabled="true" runat="server" Text="Proposal" PostBackUrl="PRG_ANNTY_PROP_POLICY.aspx?menu=AN_QUOTE"></asp:LinkButton>
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 
             <div style="display: none;">
